@@ -1,6 +1,23 @@
 #Script name : netconfig; October 16, 2020
+#!/bin/sh
 #This script will get the ip configuration and a list of open ports then send them to a dump file
 #You must run this file as root otherwise it won't run
-today=`date '+%Y_%m_%d'`; #This will set the 'today' variable so I can use it on the next line
-ip addr > ./$today.netconfigout; netstat -tulnp >> ./$today.netconfigout;
+#today=`date '+%Y_%m_%d'`; #This will set the 'today' variable so I can use it on the next line
+#ip addr > ./$today.netconfigout; netstat -tulnp >> ./$today.netconfigout;
+echo "My hostname is: "
+hostname
+echo "My ipv4 address is: "
+ip -4 address
+echo "My ipv6 address is: "
+ip -6 address
+echo "My open ports are: "
+netstat -tulnp
+echo "My proccesses are: "
+ps
+echo "My ipv4 firewall rules are: "
+iptables -S
+echo "My ipv6 firewall rules are: "
+ip6tables -S
+echo "My firewall rules for all tables are: "
+iptables -L -v -n|more
 #End of script
